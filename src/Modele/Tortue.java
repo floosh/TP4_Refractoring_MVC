@@ -5,7 +5,7 @@
  */
 package Modele;
 
-import java.util.Observable;
+import java.awt.Color;
 
 
 /**
@@ -21,6 +21,13 @@ public class Tortue{
         this.parent = parent;
     }
 
+    /**
+     * @return the color
+     */
+    public Color getColor() {
+        return color;
+    }
+
     public enum Forme {
         TRIANGLE
     };
@@ -30,14 +37,16 @@ public class Tortue{
     protected int x;
     protected int y;
     protected int dir;
+    private Color color;
     
     protected Forme forme;
     protected static final double ratioDegRad = 0.0174533; // Rapport radians/degres (pour la conversion)
 
-    public Tortue(int x, int y, Forme f, String couleur) {
+    public Tortue(int x, int y, Forme f, Color color) {
         this.forme = f;
         this.x = x;
         this.y = y;
+        this.color = color;
     }
     /**
      * @return the x

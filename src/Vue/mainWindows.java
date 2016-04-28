@@ -24,7 +24,7 @@ public class mainWindows extends JFrame implements ActionListener, Observer {
     private Controleur controleur;
 
     private Tortue current;
-    
+
     private FeuilleDessin feuille;
     public static final Dimension VGAP = new Dimension(1, 5);
     public static final Dimension HGAP = new Dimension(5, 1);
@@ -60,13 +60,12 @@ public class mainWindows extends JFrame implements ActionListener, Observer {
             }
         });
     }
-    
 
     private void init() {
 
         modele = new Modele();
         modele.addObserver(this);
-        current = new Tortue(500 / 2, 400 / 2, Tortue.Forme.TRIANGLE, "red");
+        current = new Tortue(500 / 2, 400 / 2, Tortue.Forme.TRIANGLE, Color.red);
         modele.addTortue(current);
         this.controleur = new Controleur(modele);
 
@@ -81,7 +80,7 @@ public class mainWindows extends JFrame implements ActionListener, Observer {
 
         getContentPane().add(buttonPanel, "North");
 
-        addButton(toolBar, "Ajouter", "Nouvelle tortue",null);
+        addButton(toolBar, "Ajouter", "Nouvelle tortue", null);
 
         toolBar.add(Box.createRigidArea(HGAP));
         inputValue = new JTextField("45", 5);
@@ -89,8 +88,6 @@ public class mainWindows extends JFrame implements ActionListener, Observer {
         addButton(toolBar, "Avancer", "Avancer 50", null);
         addButton(toolBar, "Droite", "Droite 45", null);
         addButton(toolBar, "Gauche", "Gauche 45", null);
-//        addButton(toolBar, "Lever", "Lever Crayon", null);
-//        addButton(toolBar, "Baisser", "Baisser Crayon", null);
 
         String[] colorStrings = {"noir", "bleu", "cyan", "gris fonce", "rouge",
             "vert", "gris clair", "magenta", "orange",
@@ -103,21 +100,12 @@ public class mainWindows extends JFrame implements ActionListener, Observer {
         colorList = new JComboBox(colorStrings);
         toolBar.add(colorList);
 
-//        colorList.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                JComboBox cb = (JComboBox) e.getSource();
-//                int n = cb.getSelectedIndex();
-//                courante.setColor(n);
-//            }
-//        });
-
         // Menus
         JMenuBar menubar = new JMenuBar();
         setJMenuBar(menubar);	// on installe le menu bar
         JMenu menuFile = new JMenu("File"); // on installe le premier menu
         menubar.add(menuFile);
 
-//        addMenuItem(menuFile, "Effacer", "Effacer", KeyEvent.VK_N);
         addMenuItem(menuFile, "Quitter", "Quitter", KeyEvent.VK_Q);
 
         JMenu menuCommandes = new JMenu("Commandes"); // on installe le premier menu
@@ -125,18 +113,15 @@ public class mainWindows extends JFrame implements ActionListener, Observer {
         addMenuItem(menuCommandes, "Avancer", "Avancer", -1);
         addMenuItem(menuCommandes, "Droite", "Droite", -1);
         addMenuItem(menuCommandes, "Gauche", "Gauche", -1);
-//        addMenuItem(menuCommandes, "Lever Crayon", "Lever", -1);
-//        addMenuItem(menuCommandes, "Baisser Crayon", "Baisser", -1);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
 
         feuille.setBackground(Color.white);
         feuille.setSize(new Dimension(600, 400));
         feuille.setPreferredSize(new Dimension(600, 400));
 
         getContentPane().add(feuille, "Center");
-        
+
         pack();
         setVisible(true);
     }
@@ -146,14 +131,48 @@ public class mainWindows extends JFrame implements ActionListener, Observer {
         return (s);
     }
 
-    
     @Override
     public void actionPerformed(ActionEvent e) {
         String c = e.getActionCommand();
-        
-        if("Quitter".equals(c)) quitter();
-        else if ("Ajouter".equals(c)) current = controleur.addTortue(500/2, 400/2, (String)colorList.getSelectedItem());
+
+        if ("Quitter".equals(c)) {
+            quitter();
+        } else if ("Ajouter".equals(c)) {
+            
+            current = controleur.addTortue(500 / 2, 400 / 2, decodeColor(colorList.getSelectedIndex()));
+        }
         controleur.mouvement(c, inputValue.getText(), current);
+    }
+
+    protected Color decodeColor(int c) {
+        switch (c) {
+            case 0:
+                return (Color.black);
+            case 1:
+                return (Color.blue);
+            case 2:
+                return (Color.cyan);
+            case 3:
+                return (Color.darkGray);
+            case 4:
+                return (Color.red);
+            case 5:
+                return (Color.green);
+            case 6:
+                return (Color.lightGray);
+            case 7:
+                return (Color.magenta);
+            case 8:
+                return (Color.orange);
+            case 9:
+                return (Color.gray);
+            case 10:
+                return (Color.pink);
+            case 11:
+                return (Color.yellow);
+            default:
+                return (Color.black);
+        }
     }
 
     //utilitaires pour installer des boutons et des menus
