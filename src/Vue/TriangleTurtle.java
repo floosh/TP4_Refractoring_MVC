@@ -50,7 +50,7 @@ public class TriangleTurtle extends GraphicTurtle {
                 (int) Math.round(p2.y + r * Math.sin(theta - alpha)));
 
         arrow.addPoint(p2.x, p2.y);
-        g.setColor(Color.green);
+        g.setColor(t.getColor());
         g.fillPolygon(arrow);
     }
 

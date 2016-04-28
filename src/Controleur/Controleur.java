@@ -9,6 +9,7 @@ package Controleur;
 import Modele.Modele;
 import Modele.Tortue;
 import Modele.Tortue.Forme;
+import java.awt.Color;
 
 /**
  *
@@ -48,15 +49,17 @@ public class Controleur {
                 System.err.println("ce n'est pas un nombre : " + v);
             }
         } else if (c.equals("Ajouter")) {
-          
-        } 
+
+        }
     }
-    
-    public Tortue addTortue(int x, int y, String couleur) {
-        Tortue t = new Tortue(x,y,Forme.TRIANGLE, couleur);
-        modele.addTortue(t);
-        return t;
+
+    public Tortue addTortue(int x, int y, Color c) {
+
+        
+            Tortue t = new Tortue(x, y, Forme.TRIANGLE, c);
+            modele.addTortue(t);
+            return t;
+       
     }
 
 }
- 
