@@ -25,14 +25,14 @@ public class Tortue{
         TRIANGLE
     };
     
-    private Modele parent;
+    protected Modele parent;
     
     protected int x;
     protected int y;
     protected int dir;
     
     protected Forme forme;
-    private static final double ratioDegRad = 0.0174533; // Rapport radians/degres (pour la conversion)
+    protected static final double ratioDegRad = 0.0174533; // Rapport radians/degres (pour la conversion)
 
     public Tortue(int x, int y, Forme f, String couleur) {
         this.forme = f;
