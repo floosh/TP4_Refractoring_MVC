@@ -37,7 +37,7 @@ public class Tortue{
     protected int x;
     protected int y;
     protected int dir;
-    private Color color;
+    private final Color color;
     
     protected Forme forme;
     protected static final double ratioDegRad = 0.0174533; // Rapport radians/degres (pour la conversion)

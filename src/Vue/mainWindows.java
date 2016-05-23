@@ -7,6 +7,7 @@ package Vue;
 
 import Controleur.Controleur;
 import Modele.Modele;
+import Modele.MoveRandom;
 import Modele.Tortue;
 import Modele.TortueAutonome;
 import java.awt.*;
@@ -44,7 +45,7 @@ public class mainWindows extends JFrame implements ActionListener {
 
                 mainWindows fenetre;
 
-                Object[] options = {"Owi des tortues automatiques !", "Non je préfère conduire mes tortues moi-même"};
+                Object[] options = {"","Owi des tortues automatiques !", "Non je préfère conduire mes tortues moi-même"};
                 int n = JOptionPane.showOptionDialog(null, "Veut-tu profiter de la killer-feature de cette application, à savoir des tortues (vieux polygones colorés) qui bougent tout seuls ?",
                         "Menu principal",
                         JOptionPane.YES_NO_CANCEL_OPTION,
@@ -103,7 +104,7 @@ public class mainWindows extends JFrame implements ActionListener {
         modele.addObserver(feuille);
 
         getContentPane().setLayout(new BorderLayout(10, 10));
-
+        
         // Wow, Layouts
         JMenuBar menubar = new JMenuBar();
         // WTF dat ugly switch ...
@@ -150,7 +151,7 @@ public class mainWindows extends JFrame implements ActionListener {
                 break;
             case AUTO:
                 for (int i = 0; i < 10; i++) {
-                    modele.addTortue(new TortueAutonome(modele.width/2, modele.height/2, Tortue.Forme.TRIANGLE, Color.black));
+                    modele.addTortue(new TortueAutonome(modele.width/2, modele.height/2, Tortue.Forme.TRIANGLE, Color.black, new MoveRandom()));
                 }
                 // Hi there ?
                 break;
@@ -170,7 +171,9 @@ public class mainWindows extends JFrame implements ActionListener {
         feuille.setPreferredSize(new Dimension(width, height));
 
         getContentPane().add(feuille, "Center");
-
+        
+        this.setResizable(false);
+        
         pack();
         setVisible(true);
     }

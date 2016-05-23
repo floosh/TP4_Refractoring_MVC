@@ -14,10 +14,12 @@ import java.awt.Color;
  */
 public class TortueAutonome extends Tortue{
     
-
-    public TortueAutonome(int x, int y, Forme f, Color c)
+    MoveGeneric moveStrategy;
+    
+    public TortueAutonome(int x, int y, Forme f, Color c, MoveGeneric strategy)
     {
         super(x, y, f, c);    
+        this.moveStrategy = strategy;
     }
 
     /**
@@ -25,16 +27,8 @@ public class TortueAutonome extends Tortue{
      * @param dist distance à parcourir
      */
     public void nextStep(int dist, boolean update){
-            // angle aléatoire
-            int angle = (int)(Math.random() * 45);
            
-            if(Math.random() > 0.5) droite(angle, update); 
-            else gauche(angle, update);
-            avancer(dist, update);
-            
-            this.x = (x+parent.width) % parent.width;
-            this.y = (y+parent.height) % parent.height;
-            
+            moveStrategy.move(this, dist);
             if(update)
             parent.notifyChanges();
     }
