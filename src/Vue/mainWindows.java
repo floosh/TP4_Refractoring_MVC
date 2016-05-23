@@ -8,21 +8,21 @@ package Vue;
 import Controleur.Controleur;
 import Modele.Modele;
 import Modele.Tortue;
+import Modele.TortueAutonome;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  *
  * @author win
  */
-public class mainWindows extends JFrame implements ActionListener, Observer {
+public class mainWindows extends JFrame implements ActionListener {
 
     private Modele modele;
     private Controleur controleur;
-
+    
+    
     private Tortue current;
 
     private FeuilleDessin feuille;
@@ -31,13 +31,38 @@ public class mainWindows extends JFrame implements ActionListener, Observer {
     private JTextField inputValue;
     private JComboBox colorList;
 
+    private enum Mode {
+        AUTO, MANUEL
+    }
+
     /**
      * @param args
      */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                mainWindows fenetre = new mainWindows();
+
+                mainWindows fenetre;
+
+                Object[] options = {"Owi des tortues automatiques !", "Non je préfère conduire mes tortues moi-même"};
+                int n = JOptionPane.showOptionDialog(null, "Veut-tu profiter de la killer-feature de cette application, à savoir des tortues (vieux polygones colorés) qui bougent tout seuls ?",
+                        "Menu principal",
+                        JOptionPane.YES_NO_CANCEL_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        options,
+                        options[1]);
+
+                switch (n) {
+                    case 0:
+                        fenetre = new mainWindows(Mode.AUTO);
+                        break;
+                    case 1:
+                        fenetre = new mainWindows(Mode.MANUEL);
+                        break;
+                    default:
+                        return;
+                }
                 fenetre.setVisible(true);
             }
         });
@@ -48,9 +73,13 @@ public class mainWindows extends JFrame implements ActionListener, Observer {
         System.exit(0);
     }
 
-    public mainWindows() {
+    public mainWindows(Mode mode) {
         super("un logo tout simple");
-        init();
+        init(mode, 600, 400);
+
+        if (mode == Mode.AUTO) {
+            gameLoop();
+        }
 
         addWindowListener(new WindowAdapter() {
             @Override
@@ -61,69 +90,121 @@ public class mainWindows extends JFrame implements ActionListener, Observer {
         });
     }
 
-    private void init() {
+    private void init(Mode mode, int width, int height) {
 
-        modele = new Modele();
-        modele.addObserver(this);
-        current = new Tortue(500 / 2, 400 / 2, Tortue.Forme.TRIANGLE, Color.red);
-        modele.addTortue(current);
+        // Such model
+        modele = new Modele(width, height);
+
+        // Controller, wow
         this.controleur = new Controleur(modele);
 
+        // Much design patern
         feuille = new FeuilleDessin(modele);
+        modele.addObserver(feuille);
 
         getContentPane().setLayout(new BorderLayout(10, 10));
 
-        // Boutons
-        JToolBar toolBar = new JToolBar();
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(toolBar);
+        // Wow, Layouts
+        JMenuBar menubar = new JMenuBar();
+        // WTF dat ugly switch ...
+        switch (mode) {
+            case MANUEL:
 
-        getContentPane().add(buttonPanel, "North");
+                current = controleur.addTortue(Color.black);
 
-        addButton(toolBar, "Ajouter", "Nouvelle tortue", null);
+                JToolBar toolBar = new JToolBar();
+                JPanel buttonPanel = new JPanel();
 
-        toolBar.add(Box.createRigidArea(HGAP));
-        inputValue = new JTextField("45", 5);
-        toolBar.add(inputValue);
-        addButton(toolBar, "Avancer", "Avancer 50", null);
-        addButton(toolBar, "Droite", "Droite 45", null);
-        addButton(toolBar, "Gauche", "Gauche 45", null);
+                buttonPanel.add(toolBar);
 
-        String[] colorStrings = {"noir", "bleu", "cyan", "gris fonce", "rouge",
-            "vert", "gris clair", "magenta", "orange",
-            "gris", "rose", "jaune"};
+                getContentPane().add(buttonPanel, "North");
 
-        // Create the combo box
-        toolBar.add(Box.createRigidArea(HGAP));
-        JLabel colorLabel = new JLabel("   Couleur: ");
-        toolBar.add(colorLabel);
-        colorList = new JComboBox(colorStrings);
-        toolBar.add(colorList);
+                addButton(toolBar, "Ajouter", "Nouvelle tortue", null);
+
+                toolBar.add(Box.createRigidArea(HGAP));
+                inputValue = new JTextField("45", 5);
+                toolBar.add(inputValue);
+                addButton(toolBar, "Avancer", "Avancer 50", null);
+                addButton(toolBar, "Droite", "Droite 45", null);
+                addButton(toolBar, "Gauche", "Gauche 45", null);
+
+                // is dat r'ly used ?
+                JMenu menuCommandes = new JMenu("Commandes"); // on installe le premier menu
+                menubar.add(menuCommandes);
+                addMenuItem(menuCommandes, "Avancer", "Avancer", -1);
+                addMenuItem(menuCommandes, "Droite", "Droite", -1);
+                addMenuItem(menuCommandes, "Gauche", "Gauche", -1);
+
+                // Wow, much colors
+                String[] colorStrings = {"noir", "bleu", "cyan", "gris fonce", "rouge",
+                    "vert", "gris clair", "magenta", "orange",
+                    "gris", "rose", "jaune"};
+
+                // Create the combo box, wow
+                toolBar.add(Box.createRigidArea(HGAP));
+                JLabel colorLabel = new JLabel("   Couleur: ");
+                toolBar.add(colorLabel);
+                colorList = new JComboBox(colorStrings);
+                toolBar.add(colorList);
+
+                break;
+            case AUTO:
+                for (int i = 0; i < 10; i++) {
+                    modele.addTortue(new TortueAutonome(modele.width/2, modele.height/2, Tortue.Forme.TRIANGLE, Color.black));
+                }
+                // Hi there ?
+                break;
+        }
 
         // Menus
-        JMenuBar menubar = new JMenuBar();
         setJMenuBar(menubar);	// on installe le menu bar
         JMenu menuFile = new JMenu("File"); // on installe le premier menu
         menubar.add(menuFile);
 
         addMenuItem(menuFile, "Quitter", "Quitter", KeyEvent.VK_Q);
 
-        JMenu menuCommandes = new JMenu("Commandes"); // on installe le premier menu
-        menubar.add(menuCommandes);
-        addMenuItem(menuCommandes, "Avancer", "Avancer", -1);
-        addMenuItem(menuCommandes, "Droite", "Droite", -1);
-        addMenuItem(menuCommandes, "Gauche", "Gauche", -1);
-
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         feuille.setBackground(Color.white);
-        feuille.setSize(new Dimension(600, 400));
-        feuille.setPreferredSize(new Dimension(600, 400));
+        feuille.setSize(new Dimension(width, height));
+        feuille.setPreferredSize(new Dimension(width, height));
 
         getContentPane().add(feuille, "Center");
 
         pack();
         setVisible(true);
+    }
+
+    //Gimme gimme gimme a loop before midnight !
+    private void gameLoop() {
+
+        Thread gameLoop = new Thread() {
+
+            public void run() {
+
+                long lastLoopTime = System.nanoTime();
+                final int TARGET_FPS = 30;
+                final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
+
+                while (true) {
+                    long now = System.nanoTime();
+                    long updateLength = now - lastLoopTime;
+                    lastLoopTime = now;
+                    double delta = updateLength / ((double) OPTIMAL_TIME);
+
+                    modele.computeNextStep();
+
+                    try{
+                        Thread.sleep( (lastLoopTime-System.nanoTime() + OPTIMAL_TIME)/1000000 );
+                   } catch (Exception ex) {
+                   };
+                }
+
+            }
+        };
+ 
+        gameLoop.start();
+
     }
 
     public String getInputValue() {
@@ -138,10 +219,10 @@ public class mainWindows extends JFrame implements ActionListener, Observer {
         if ("Quitter".equals(c)) {
             quitter();
         } else if ("Ajouter".equals(c)) {
-            
-            current = controleur.addTortue(500 / 2, 400 / 2, decodeColor(colorList.getSelectedIndex()));
+            current = controleur.addTortue(decodeColor(colorList.getSelectedIndex()));
+        } else {
+            controleur.mouvement(c, inputValue.getText(), current);
         }
-        controleur.mouvement(c, inputValue.getText(), current);
     }
 
     protected Color decodeColor(int c) {
@@ -211,11 +292,6 @@ public class mainWindows extends JFrame implements ActionListener, Observer {
                 menuItem.setAccelerator(KeyStroke.getKeyStroke(key, 0, false));
             }
         }
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        this.update(this.getGraphics());
     }
 
 }

@@ -87,19 +87,22 @@ public class Tortue{
         parent.notifyChanges();
     }
 
-    public void droite(int ang) {
+    public void droite(int ang, boolean update) {
         dir = (getDir() + ang) % 360;
+        if(update)
         parent.notifyChanges();
     }
 
-    public void gauche(int ang) {
+    public void gauche(int ang, boolean update) {
         dir = (getDir() - ang) % 360;
+        if(update)
         parent.notifyChanges();
     }
 
-    public void avancer(int dist) {
+    public void avancer(int dist, boolean update) {
         x = (int) Math.round(getX() + dist * Math.cos(ratioDegRad * getDir()));
         y = (int) Math.round(getY() + dist * Math.sin(ratioDegRad * getDir()));
+        if(update)
         parent.notifyChanges();
     }
     

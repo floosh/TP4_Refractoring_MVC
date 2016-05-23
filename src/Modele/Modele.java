@@ -8,17 +8,22 @@ package Modele;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-import java.util.Observer;
+
 
 /**
  *
  * @author win
  */
 public class Modele extends Observable  {
+    
+    // Such Model :
+    public int width, height;
     public List<Tortue> tortues;
     
-    public Modele() {
+    public Modele(int width, int height) {
         tortues = new ArrayList<>();
+        this.height = height;
+        this.width = width;
     }
     
     public List<Tortue> getTortues() {
@@ -28,7 +33,6 @@ public class Modele extends Observable  {
     public void addTortue(Tortue t) {
         tortues.add(t);
         t.setParent(this);
-        
         notifyChanges();
     }
     
@@ -37,5 +41,17 @@ public class Modele extends Observable  {
         notifyObservers();
     }
     
+    public void computeNextStep() {
+        for(Tortue t : tortues) {
+            if (t instanceof TortueAutonome) {
+                ((TortueAutonome) t).nextStep(5, false);
+            }
+        }
+        System.out.println("Such frame");
+        notifyChanges();
+    }
+    
+    // Windows params :
   
 }
+ 

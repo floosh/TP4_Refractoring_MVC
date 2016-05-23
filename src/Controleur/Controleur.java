@@ -9,6 +9,7 @@ package Controleur;
 import Modele.Modele;
 import Modele.Tortue;
 import Modele.Tortue.Forme;
+import Modele.TortueAutonome;
 import java.awt.Color;
 
 /**
@@ -29,7 +30,7 @@ public class Controleur {
         if (c.equals("Avancer")) {
             try {
 //                modele.tortue.avancer(Integer.parseInt(v));
-                current.avancer(Integer.parseInt(v));
+                current.avancer(Integer.parseInt(v), true);
             } catch (NumberFormatException ex) {
                 System.err.println("ce n'est pas un nombre : " + v);
             }
@@ -37,29 +38,25 @@ public class Controleur {
         } else if (c.equals("Droite")) {
             try {
 //                modele.tortue.droite(Integer.parseInt(v));
-                current.droite(Integer.parseInt(v));
+                current.droite(Integer.parseInt(v), true);
             } catch (NumberFormatException ex) {
                 System.err.println("ce n'est pas un nombre : " + v);
             }
         } else if (c.equals("Gauche")) {
             try {
 //                modele.tortue.gauche(Integer.parseInt(v));
-                current.gauche(Integer.parseInt(v));
+                current.gauche(Integer.parseInt(v), true);
             } catch (NumberFormatException ex) {
                 System.err.println("ce n'est pas un nombre : " + v);
             }
-        } else if (c.equals("Ajouter")) {
-
-        }
+        } 
     }
 
-    public Tortue addTortue(int x, int y, Color c) {
+    public Tortue addTortue(Color c) {
+        Tortue t = new Tortue(modele.width, modele.height, Forme.TRIANGLE, c);
+        modele.addTortue(t);
+        return t;
 
-        
-            Tortue t = new Tortue(x, y, Forme.TRIANGLE, c);
-            modele.addTortue(t);
-            return t;
-       
     }
 
 }

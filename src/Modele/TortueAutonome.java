@@ -7,7 +7,6 @@ package Modele;
 
 import Modele.Tortue.Forme;
 import java.awt.Color;
-import java.util.ArrayList;
 
 /**
  *
@@ -15,28 +14,29 @@ import java.util.ArrayList;
  */
 public class TortueAutonome extends Tortue{
     
-    
-    private static int nbTortues = 0;
 
-    public TortueAutonome(int x, int y, Forme f, String c)
+    public TortueAutonome(int x, int y, Forme f, Color c)
     {
-        super(x, y, f, c);
-        nbTortues++;
-        
+        super(x, y, f, c);    
     }
 
     /**
      * La tortue se déplace aléatoirement d'une certaine distance
      * @param dist distance à parcourir
      */
-    public void nextStep(int dist){
+    public void nextStep(int dist, boolean update){
             // angle aléatoire
-            int angle = (int)(Math.random() * 90);
+            int angle = (int)(Math.random() * 45);
            
-            if(Math.random() > 0.5) droite(angle); 
-            else gauche(angle);
-            avancer(dist);
-             parent.notifyChanges();
+            if(Math.random() > 0.5) droite(angle, update); 
+            else gauche(angle, update);
+            avancer(dist, update);
+            
+            this.x = (x+parent.width) % parent.width;
+            this.y = (y+parent.height) % parent.height;
+            
+            if(update)
+            parent.notifyChanges();
     }
 
 }

@@ -8,13 +8,16 @@ package Vue;
 import Modele.Modele;
 import Modele.Tortue;
 import java.awt.*;
+import java.util.Observable;
+import java.util.Observer;
+
 import javax.swing.*;
 
 /**
  *
  * @author win
  */
-public class FeuilleDessin extends JPanel {
+public class FeuilleDessin extends JPanel implements Observer{
 
     Modele modele;
 
@@ -48,5 +51,11 @@ public class FeuilleDessin extends JPanel {
                     break;
             }
         }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        System.out.println("update");
+        this.update(this.getGraphics());
     }
 }
