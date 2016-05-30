@@ -7,12 +7,11 @@ package Modele;
 
 import java.awt.Color;
 
-
 /**
  *
  * @author win
  */
-public class Tortue{
+public class Tortue {
 
     /**
      * @param parent the parent to set
@@ -31,14 +30,15 @@ public class Tortue{
     public enum Forme {
         TRIANGLE
     };
-    
+
     protected Modele parent;
-    
+
     protected int x;
     protected int y;
     protected int dir;
+    protected float speed;
     private final Color color;
-    
+
     protected Forme forme;
     protected static final double ratioDegRad = 0.0174533; // Rapport radians/degres (pour la conversion)
 
@@ -47,7 +47,9 @@ public class Tortue{
         this.x = x;
         this.y = y;
         this.color = color;
+        this.speed = 1.0f;
     }
+
     /**
      * @return the x
      */
@@ -68,18 +70,16 @@ public class Tortue{
     public int getDir() {
         return dir;
     }
-    
-        public Forme getForme() {
+
+    public Forme getForme() {
         return forme;
     }
-    
 
     public void reset() {
         x = 0;
         y = 0;
         dir = -90;
     }
-
 
     public void setPosition(int newX, int newY) {
         x = newX;
@@ -89,21 +89,28 @@ public class Tortue{
 
     public void droite(int ang, boolean update) {
         dir = (getDir() + ang) % 360;
-        if(update)
-        parent.notifyChanges();
+        if (update) {
+            parent.notifyChanges();
+        }
     }
 
     public void gauche(int ang, boolean update) {
         dir = (getDir() - ang) % 360;
-        if(update)
-        parent.notifyChanges();
+        if (update) {
+            parent.notifyChanges();
+        }
     }
 
-    public void avancer(int dist, boolean update) {
+    public void avancer(float dist, boolean update) {
         x = (int) Math.round(getX() + dist * Math.cos(ratioDegRad * getDir()));
         y = (int) Math.round(getY() + dist * Math.sin(ratioDegRad * getDir()));
-        if(update)
-        parent.notifyChanges();
+
+        x = (x + parent.width) % parent.width;
+        y = (y + parent.height) % parent.height;
+
+        if (update) {
+            parent.notifyChanges();
+        }
     }
-    
+
 }

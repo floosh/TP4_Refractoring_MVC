@@ -2,17 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/home/win/NetBeansProjects/TP4_%20ISI3_refractoring_MVC/src/Modele/Modele.java</file>
-            <file>file:/home/win/NetBeansProjects/TP4_%20ISI3_refractoring_MVC/src/logoInit/logoInit/Tortue.java</file>
-            <file>file:/home/win/NetBeansProjects/TP4_%20ISI3_refractoring_MVC/src/Vue/mainWindows.java</file>
-            <file>file:/home/win/NetBeansProjects/TP4_%20ISI3_refractoring_MVC/src/logoInit/logoInit/FeuilleDessin.java</file>
-            <file>file:/home/win/NetBeansProjects/TP4_%20ISI3_refractoring_MVC/src/Modele/Tortue.java</file>
-            <file>file:/home/win/NetBeansProjects/TP4_%20ISI3_refractoring_MVC/src/Controleur/Controleur.java</file>
-            <file>file:/home/win/NetBeansProjects/TP4_%20ISI3_refractoring_MVC/src/Vue/GraphicTurtle.java</file>
-            <file>file:/home/win/NetBeansProjects/TP4_%20ISI3_refractoring_MVC/src/logoInit/logoInit/SimpleLogo.java</file>
-            <file>file:/home/win/NetBeansProjects/TP4_%20ISI3_refractoring_MVC/src/Vue/TriangleTurtle.java</file>
-            <file>file:/home/win/NetBeansProjects/TP4_%20ISI3_refractoring_MVC/src/Vue/FeuilleDessin.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

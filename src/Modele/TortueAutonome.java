@@ -18,7 +18,8 @@ public class TortueAutonome extends Tortue{
     
     public TortueAutonome(int x, int y, Forme f, Color c, MoveGeneric strategy)
     {
-        super(x, y, f, c);    
+        super(x, y, f, c);   
+        this.dir = (int)(Math.random()*360);
         this.moveStrategy = strategy;
     }
 
@@ -28,7 +29,7 @@ public class TortueAutonome extends Tortue{
      */
     public void nextStep(int dist, boolean update){
            
-            moveStrategy.move(this, dist);
+            moveStrategy.move(this);
             if(update)
             parent.notifyChanges();
     }

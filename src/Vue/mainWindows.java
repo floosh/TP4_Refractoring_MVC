@@ -7,6 +7,7 @@ package Vue;
 
 import Controleur.Controleur;
 import Modele.Modele;
+import Modele.MoveFlocking;
 import Modele.MoveRandom;
 import Modele.Tortue;
 import Modele.TortueAutonome;
@@ -33,7 +34,7 @@ public class mainWindows extends JFrame implements ActionListener {
     private JComboBox colorList;
 
     private enum Mode {
-        AUTO, MANUEL
+        FLOCKING, AUTO, MANUEL
     }
 
     /**
@@ -45,8 +46,8 @@ public class mainWindows extends JFrame implements ActionListener {
 
                 mainWindows fenetre;
 
-                Object[] options = {"","Owi des tortues automatiques !", "Non je préfère conduire mes tortues moi-même"};
-                int n = JOptionPane.showOptionDialog(null, "Veut-tu profiter de la killer-feature de cette application, à savoir des tortues (vieux polygones colorés) qui bougent tout seuls ?",
+                Object[] options = {"Killer feature -> le flocking","Des tortues automatiques !", "Je préfère conduire mes tortues moi-même"};
+                int n = JOptionPane.showOptionDialog(null, "De quelle manière les morceaux de polygones (ou tortues) doivent se déplacer ?",
                         "Menu principal",
                         JOptionPane.YES_NO_CANCEL_OPTION,
                         JOptionPane.QUESTION_MESSAGE,
@@ -56,9 +57,12 @@ public class mainWindows extends JFrame implements ActionListener {
 
                 switch (n) {
                     case 0:
-                        fenetre = new mainWindows(Mode.AUTO);
+                        fenetre = new mainWindows(Mode.FLOCKING);
                         break;
                     case 1:
+                        fenetre = new mainWindows(Mode.AUTO);
+                        break;
+                    case 2:
                         fenetre = new mainWindows(Mode.MANUEL);
                         break;
                     default:
@@ -78,7 +82,7 @@ public class mainWindows extends JFrame implements ActionListener {
         super("un logo tout simple");
         init(mode, 600, 400);
 
-        if (mode == Mode.AUTO) {
+        if (mode == Mode.AUTO || mode == Mode.FLOCKING) {
             gameLoop();
         }
 
@@ -153,8 +157,13 @@ public class mainWindows extends JFrame implements ActionListener {
                 for (int i = 0; i < 10; i++) {
                     modele.addTortue(new TortueAutonome(modele.width/2, modele.height/2, Tortue.Forme.TRIANGLE, Color.black, new MoveRandom()));
                 }
-                // Hi there ?
                 break;
+            case FLOCKING:
+                for (int i = 0; i < 10; i++) {
+                    modele.addTortue(new TortueAutonome(modele.width/2, modele.height/2, Tortue.Forme.TRIANGLE, Color.black, new MoveFlocking(modele)));
+                }
+                break;
+                
         }
 
         // Menus

@@ -51,7 +51,5 @@ public class Modele extends Observable  {
         notifyChanges();
     }
     
-    // Windows params :
-  
 }
  
