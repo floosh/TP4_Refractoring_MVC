@@ -28,7 +28,9 @@ public class Tortue {
     }
 
     public enum Forme {
-        TRIANGLE
+        TRIANGLE,
+        CERCLE,
+        SQUARE
     };
 
     protected Modele parent;

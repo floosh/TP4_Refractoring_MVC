@@ -17,7 +17,7 @@ import javax.swing.*;
  *
  * @author win
  */
-public class FeuilleDessin extends JPanel implements Observer{
+public class FeuilleDessin extends JPanel implements Observer {
 
     Modele modele;
 
@@ -47,7 +47,16 @@ public class FeuilleDessin extends JPanel implements Observer{
 
                     GraphicTurtle graphicTurtle = new TriangleTurtle(t);
                     graphicTurtle.draw(g);
+                    break;
+                case CERCLE:
 
+                    GraphicTurtle graphicTurtle2 = new CircleTurtle(t);
+                    graphicTurtle2.draw(g);
+                    break;
+                case SQUARE:
+
+                    GraphicTurtle graphicTurtle3 = new SquareTurtle(t);
+                    graphicTurtle3.draw(g);
                     break;
             }
         }
