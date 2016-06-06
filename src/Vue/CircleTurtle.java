@@ -23,7 +23,7 @@ public class CircleTurtle extends GraphicTurtle{
 
     @Override
     public void draw(Graphics g) {
-        g.getColor();
+        g.setColor(t.getColor());
         g.fillOval(t.getX(),t.getY(), rp, rp);       
         
     }

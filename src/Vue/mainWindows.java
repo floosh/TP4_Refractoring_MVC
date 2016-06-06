@@ -154,13 +154,16 @@ public class mainWindows extends JFrame implements ActionListener {
 
                 break;
             case AUTO:
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < 5; i++) {
                     modele.addTortue(new TortueAutonome(modele.width/2, modele.height/2, Tortue.Forme.TRIANGLE, Color.black, new MoveRandom()));
+                    modele.addTortue(new TortueAutonome(modele.width/2, modele.height/2, Tortue.Forme.SQUARE, Color.CYAN, new MoveRandom()));
+                    modele.addTortue(new TortueAutonome(modele.width/2, modele.height/2, Tortue.Forme.CERCLE, Color.PINK, new MoveRandom()));
+
                 }
                 break;
             case FLOCKING:
-                for (int i = 0; i < 10; i++) {
-                    modele.addTortue(new TortueAutonome(modele.width/2, modele.height/2, Tortue.Forme.CERCLE, Color.black, new MoveFlocking(modele)));
+                for (int i = 0; i < 15; i++) {
+                    modele.addTortue(new TortueAutonome(modele.width/2, modele.height/2, Tortue.Forme.TRIANGLE, Color.black, new MoveFlocking(modele)));
                 }
                 break;
                 

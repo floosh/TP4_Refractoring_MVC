@@ -6,16 +6,26 @@
 package Modele;
 
 import java.awt.Color;
+import static java.awt.Color.black;
 
 /**
  *
  * @author win
  */
 public class Tortue {
+    
 
     /**
      * @param parent the parent to set
      */
+    
+    public Tortue(){
+        color = Color.BLACK;
+        x =0;
+        y=0;
+        forme = Forme.TRIANGLE;
+    }
+            
     public void setParent(Modele parent) {
         this.parent = parent;
     }
@@ -83,6 +93,7 @@ public class Tortue {
         dir = -90;
     }
 
+    
     public void setPosition(int newX, int newY) {
         x = newX;
         y = newY;

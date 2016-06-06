@@ -25,7 +25,7 @@ public class SquareTurtle extends GraphicTurtle{
     @Override
     public void draw(Graphics g) {
 
-        g.getColor();
+       g.setColor(t.getColor());
         g.fillRect(t.getX(),t.getY(), rp, rp);   
         
     }
